@@ -8,6 +8,7 @@ import {
 
 import {isRedirectError} from 'next/dist/client/components/redirect-error';
 import {formatError} from '../utils';
+import {signIn} from '@/auth';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -20,9 +21,16 @@ export async function signInWithCredentials(
             password: formData.get('password'),
         });
 
-        console.log('user', user);
+        await signIn('credentials', {
+            redirect: false,
+            ...user,
+        });
 
-        return {success: true, message: 'Signed in successfully'};
+        return {
+            success: true,
+            message: 'Welcome back! Redirecting...',
+            redirectTo: '/',
+        };
     } catch (error) {
         if (isRedirectError(error)) {
             throw error;
@@ -41,9 +49,29 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
             confirmPassword: formData.get('confirmPassword'),
         });
 
-        console.log('registered user details  ', user);
+        const registerCredentials = {
+            name: user.name,
+            email: user.email,
+            password: user.password,
+        };
 
-        return {success: true, message: 'User registered successfully'};
+        // Register user
+        const res = await fetch(
+            'https://flowva-bed-auth.onrender.com/api/v1/auth/register',
+            {
+                method: 'POST',
+                body: JSON.stringify(registerCredentials),
+                headers: {'Content-Type': 'application/json'},
+            }
+        );
+
+        if (res.ok) {
+            return {
+                success: true,
+                message: 'Account created successfully! Welcome to Flowva.',
+                redirectTo: '/',
+            };
+        }
     } catch (error) {
         if (isRedirectError(error)) {
             throw error;
