@@ -1,26 +1,320 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+@layer utilities {
+    .wrapper {
+        @apply max-w-7xl lg:mx-auto p-5 md:px-10 w-full;
+    }
+
+    .flex-start {
+        @apply flex justify-start items-center;
+    }
+    .flex-center {
+        @apply flex justify-center items-center;
+    }
+
+    .flex-between {
+        @apply flex justify-between items-center;
+    }
+
+    .h1-bold {
+        @apply font-bold text-3xl lg:text-4xl;
+    }
+
+    .h2-bold {
+        @apply font-bold text-2xl lg:text-3xl;
+    }
+
+    .h3-bold {
+        @apply font-bold text-xl lg:text-2xl;
+    }
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    /* Flowva Brand */
+    --primary-fb: #7c4dff;
+    --primary-light-fb: #ede7f6;
+    --primary-dark-fb: #651fff;
+    --accent-fb: #ff80ab;
+    --success-fb: #4caf50;
+    --error-fb: #f44336;
+    --gray-50-fb: #fafafa;
+    --gray-100-fb: #f5f5f5;
+    --gray-200-fb: #eeeeee;
+    --gray-300-fb: #e0e0e0;
+    --gray-600-fb: #757575;
+    --gray-700-fb: #616161;
+    --radius-fb: 12px;
+    --radius-lg-fb: 16px;
+    --shadow-sm-fb: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md-fb: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition-fb: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    /* End of Flowva Brand */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@layer base {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        background: linear-gradient(
+            135deg,
+            var(--primary-light-fb) 0%,
+            #f5f5fa 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        color: var(--gray-700-fb);
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.container {
+    background-color: white;
+    border-radius: var(--radius-lg-fb);
+    box-shadow: var(--shadow-md-fb);
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition-fb);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(
+        90deg,
+        var(--primary-fb) 0%,
+        var(--accent-fb) 100%
+    );
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--gray-700-fb);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--gray-300-fb);
+    border-radius: var(--radius-fb);
+    font-size: 15px;
+    transition: var(--transition-fb);
+    background-color: var(--gray-50-fb) !important;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-fb);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(124, 77, 255, 0.2);
+    background-color: white;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 15px;
+    top: 30px;
+    cursor: pointer;
+    color: var(--gray-600-fb);
+    font-size: 14px;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+}
+
+.forgot-password a {
+    color: var(--gray-600-fb);
+    font-size: 13px;
+    text-decoration: none;
+    transition: var(--transition-fb);
+}
+
+.forgot-password a:hover {
+    color: var(--primary-fb);
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: var(--radius-fb);
+    background-color: var(--primary-fb);
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: var(--transition-fb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark-fb);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(124, 77, 255, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background-color: white;
+    border: 1px solid var(--gray-300-fb);
+    color: var(--gray-700-fb);
+}
+
+.btn-secondary:hover {
+    background-color: var(--gray-50-fb);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: var(--gray-600);
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--gray-200-fb);
+}
+
+.divider::before {
+    margin-right: 15px;
+}
+
+.divider::after {
+    margin-left: 15px;
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 14px;
+    color: var(--gray-600-fb);
+}
+
+.form-footer a {
+    color: var(--primary-fb);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition-fb);
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+.form-message {
+    padding: 12px;
+    border-radius: var(--radius-fb);
+    margin-bottom: 20px;
+    font-size: 14px;
+    display: none;
+}
+
+.error-message {
+    background-color: rgba(244, 67, 54, 0.1);
+    color: var(--error);
+    border-left: 4px solid var(--error-fb);
+}
+
+.success-message {
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--success);
+    border-left: 4px solid var(--success-fb);
+}
+
+.password-strength {
+    height: 4px;
+    background-color: var(--gray-200-fb);
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+}
+
+.strength-meter {
+    height: 100%;
+    width: 0%;
+    transition: var(--transition-fb);
+}
+
+.weak {
+    background-color: #ff5252;
+    width: 33%;
+}
+
+.medium {
+    background-color: #ffc107;
+    width: 66%;
+}
+
+.strong {
+    background-color: #4caf50;
+    width: 100%;
+}
+
+.password-hint {
+    font-size: 12px;
+    color: var(--gray-600-fb);
+    margin-top: 4px;
+}
+
+.animate-form {
+    animation: fadeInUp 0.5s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+    }
+
+    .welcome {
+        font-size: 20px;
+    }
 }
