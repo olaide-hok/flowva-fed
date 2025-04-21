@@ -57,7 +57,7 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 
         // Register user
         const res = await fetch(
-            'https://flowva-bed-auth.onrender.com/api/v1/auth/register',
+            `${process.env.NEXT_FLOWVA_API_REGISTER_ROUTE}`,
             {
                 method: 'POST',
                 body: JSON.stringify(registerCredentials),
