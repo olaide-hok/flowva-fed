@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import 'animate.css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -244,7 +245,6 @@
     border-radius: var(--radius-fb);
     margin-bottom: 20px;
     font-size: 14px;
-    display: none;
 }
 
 .error-message {
