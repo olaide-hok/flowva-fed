@@ -1,17 +1,18 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import {signIn} from '@/auth';
 import CustomSvgs from '@/components/shared/custom-svgs';
 import {Button} from '@/components/ui/button';
-import {getProviders} from 'next-auth/react';
+import {getProviders, useSession} from 'next-auth/react';
 import {useEffect, useState} from 'react';
 
 // Infer the type from getProviders()
 type Providers = Awaited<ReturnType<typeof getProviders>>;
 
-const GoogleSignInButton = ({session}: any) => {
+const GoogleSignInButton = () => {
+    const {data: session} = useSession();
     const [providers, setProviders] = useState<Providers | null>(null);
+    console.log(session);
 
     useEffect(() => {
         const setAuthProviders = async () => {
@@ -21,6 +22,7 @@ const GoogleSignInButton = ({session}: any) => {
 
         setAuthProviders();
     }, []);
+
     return (
         <div>
             {!session &&
@@ -29,6 +31,7 @@ const GoogleSignInButton = ({session}: any) => {
                     if (provider.id === 'google') {
                         return (
                             <Button
+                                type="button"
                                 key={index}
                                 onClick={() => signIn(provider.id)}
                                 className="btn btn-secondary">
