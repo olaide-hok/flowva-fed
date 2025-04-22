@@ -14,7 +14,7 @@ type FlowvaOnboardingAppState = OnboardingFormData & {
     setAboutYou: (aboutYou: AboutYou) => void;
     setLocation: (location: Location) => void;
     setToolStack: (tool: ToolStack) => void;
-    setGoals: (goals: [Goals]) => void;
+    setGoals: (goals: Goals) => void;
     submitForm: () => void;
 };
 
