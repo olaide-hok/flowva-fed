@@ -8,7 +8,10 @@ const CompletionPopup = ({onClose}: CompletionPopupProps) => {
             <div className="completion-popup active">
                 <h2>Onboarding Complete!</h2>
                 <p>Taking you to your dashboard now.</p>
-                <button className="btn-fob" onClick={onClose}>
+                <button
+                    type="button"
+                    className="btn-fob cursor-pointer"
+                    onClick={onClose}>
                     OK
                 </button>
             </div>
