@@ -1,11 +1,15 @@
 import {useState} from 'react';
 import CompletionPopup from './completion-popup';
+import {useOnboardingAppState} from '@/store';
 
 const Completion = () => {
     const [showPopup, setShowPopup] = useState(false);
 
+    const {submitForm} = useOnboardingAppState();
+
     const handleFinish = () => {
         setShowPopup(true);
+        submitForm();
     };
 
     return (
