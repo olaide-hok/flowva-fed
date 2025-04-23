@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
 import {APP_NAME, signUpDefaultValues} from '@/lib/constants';
 import Link from 'next/link';
 import {useActionState, useEffect, useState} from 'react';
@@ -39,10 +36,15 @@ const SignUpForm = () => {
         const {pending} = useFormStatus();
 
         return (
-            <Button disabled={pending} className="btn" variant="default">
+            <button
+                type="submit"
+                disabled={pending}
+                className={`btn ${
+                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}>
                 {pending ? 'Creating your account...' : 'Create account'}
                 <CustomSvgs type="create" />
-            </Button>
+            </button>
         );
     };
 
@@ -65,8 +67,8 @@ const SignUpForm = () => {
             )}
 
             <div className="form-group">
-                <Label htmlFor="email">Name</Label>
-                <Input
+                <label htmlFor="email">Name</label>
+                <input
                     id="name"
                     name="name"
                     type="text"
@@ -76,8 +78,8 @@ const SignUpForm = () => {
                 />
             </div>
             <div className="form-group">
-                <Label htmlFor="email">Email</Label>
-                <Input
+                <label htmlFor="email">Email</label>
+                <input
                     id="email"
                     name="email"
                     type="text"
@@ -87,8 +89,8 @@ const SignUpForm = () => {
                 />
             </div>
             <div className="form-group">
-                <Label htmlFor="password">Password</Label>
-                <Input
+                <label htmlFor="password">Password</label>
+                <input
                     id="password"
                     name="password"
                     type={passwordToggle.inputType}
@@ -115,8 +117,8 @@ const SignUpForm = () => {
             </div>
 
             <div className="form-group">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
                     id="confirmPassword"
                     name="confirmPassword"
                     type={confirmToggle.inputType}

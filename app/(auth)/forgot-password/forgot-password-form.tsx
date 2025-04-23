@@ -1,8 +1,5 @@
 'use client';
 import CustomSvgs from '@/components/shared/custom-svgs';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
 import {forgotPwd} from '@/lib/actions/user.actions';
 import Link from 'next/link';
 import {useActionState} from 'react';
@@ -25,8 +22,8 @@ const ForgotPasswordForm = () => {
                 <div className="form-message">{data.message}</div>
             )}
             <div className="form-group">
-                <Label htmlFor="email">Email</Label>
-                <Input
+                <label htmlFor="email">Email</label>
+                <input
                     id="email"
                     name="email"
                     type="email"
@@ -36,10 +33,15 @@ const ForgotPasswordForm = () => {
                 />
             </div>
 
-            <Button disabled={pending} className="btn" variant="default">
+            <button
+                type="submit"
+                disabled={pending}
+                className={`btn ${
+                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}>
                 <CustomSvgs type="reset" />
                 {pending ? 'Sending In...' : 'Send reset link'}
-            </Button>
+            </button>
 
             <div className="form-footer">
                 Remember your password?{' '}

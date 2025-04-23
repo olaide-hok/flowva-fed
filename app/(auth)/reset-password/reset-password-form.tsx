@@ -1,8 +1,5 @@
 'use client';
 import CustomSvgs from '@/components/shared/custom-svgs';
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
 import {usePasswordStrength} from '@/hooks/usePwdStrength';
 import {usePasswordToggle} from '@/hooks/usePwdToggle';
 import {resetPwd} from '@/lib/actions/user.actions';
@@ -40,8 +37,8 @@ const ResetPasswordForm = () => {
                 </div>
             )}
             <div className="form-group">
-                <Label htmlFor="password">Password</Label>
-                <Input
+                <label htmlFor="password">Password</label>
+                <input
                     id="password"
                     name="password"
                     type={passwordToggle.inputType}
@@ -66,8 +63,8 @@ const ResetPasswordForm = () => {
             </div>
 
             <div className="form-group">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <Input
+                <label htmlFor="confirmPassword">Confirm Password</label>
+                <input
                     id="confirmPassword"
                     name="confirmPassword"
                     type={confirmToggle.inputType}
@@ -83,10 +80,15 @@ const ResetPasswordForm = () => {
                 </span>
             </div>
 
-            <Button disabled={pending} className="btn" variant="default">
+            <button
+                type="submit"
+                disabled={pending}
+                className={`btn ${
+                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}>
                 <CustomSvgs type="reset" />
                 {pending ? 'Resetting...' : 'Reset Password'}
-            </Button>
+            </button>
         </form>
     );
 };

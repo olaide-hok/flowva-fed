@@ -1,8 +1,5 @@
 'use client';
 
-import {Button} from '@/components/ui/button';
-import {Input} from '@/components/ui/input';
-import {Label} from '@/components/ui/label';
 import {signInDefaultValues} from '@/lib/constants';
 import Link from 'next/link';
 import {useActionState, useEffect, useState} from 'react';
@@ -32,14 +29,15 @@ const CredentialsSignInForm = () => {
     const SignInButton = () => {
         const {pending} = useFormStatus();
         return (
-            <Button
+            <button
                 type="submit"
                 disabled={pending}
-                className="btn"
-                variant="default">
+                className={`btn ${
+                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}>
                 <CustomSvgs type="sign-in" />
                 {pending ? 'Signing In...' : 'Sign In'}
-            </Button>
+            </button>
         );
     };
 
@@ -61,8 +59,8 @@ const CredentialsSignInForm = () => {
             )}
 
             <div className="form-group">
-                <Label htmlFor="email">Email</Label>
-                <Input
+                <label htmlFor="email">Email</label>
+                <input
                     id="email"
                     name="email"
                     type="email"
@@ -73,8 +71,8 @@ const CredentialsSignInForm = () => {
                 />
             </div>
             <div className="form-group">
-                <Label htmlFor="password">Password</Label>
-                <Input
+                <label htmlFor="password">Password</label>
+                <input
                     name="password"
                     type={inputType}
                     required
