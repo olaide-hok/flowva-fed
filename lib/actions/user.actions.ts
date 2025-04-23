@@ -4,6 +4,7 @@ import {
     signInFormSchema,
     signUpFormSchema,
     forgotPasswordSchema,
+    resetPasswordSchema,
 } from '../validators';
 
 import {isRedirectError} from 'next/dist/client/components/redirect-error';
@@ -93,6 +94,32 @@ export async function forgotPwd(prevState: unknown, formData: FormData) {
         console.log('Reset link sent to your email', userEmail);
 
         return {success: true, message: 'Reset link sent to your email'};
+    } catch (error) {
+        if (isRedirectError(error)) {
+            throw error;
+        }
+        return {
+            success: false,
+            message: formatError(error),
+        };
+    }
+}
+
+// Reset password
+export async function resetPwd(prevState: unknown, formData: FormData) {
+    try {
+        const userPwd = resetPasswordSchema.parse({
+            password: formData.get('password'),
+            confirmPassword: formData.get('confirmPassword'),
+        });
+
+        console.log('New password', userPwd.password);
+
+        return {
+            success: true,
+            message:
+                'Your password has been changed. Redirecting to Log In page...',
+        };
     } catch (error) {
         if (isRedirectError(error)) {
             throw error;
