@@ -1,7 +1,16 @@
+import {redirect} from 'next/navigation';
+import {useEffect} from 'react';
+
 type CompletionPopupProps = {
     onClose: () => void;
 };
 const CompletionPopup = ({onClose}: CompletionPopupProps) => {
+    useEffect(() => {
+        setTimeout(() => {
+            redirect('/dashboard');
+        }, 5000);
+    }, []);
+
     return (
         <>
             <div className="overlay active"></div>
