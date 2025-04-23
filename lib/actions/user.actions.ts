@@ -66,11 +66,20 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
             }
         );
 
+        const data = await res.json();
+
         if (res.ok) {
             return {
                 success: true,
                 message: 'Account created successfully! Welcome to Flowva.',
                 redirectTo: '/',
+            };
+        }
+
+        if (!res.ok && res.status === 404) {
+            return {
+                success: data.success,
+                message: data.error,
             };
         }
     } catch (error) {
