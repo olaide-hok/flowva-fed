@@ -116,6 +116,10 @@
     );
 }
 
+.warning {
+    color: var(--warning-fob);
+}
+
 .form-group {
     margin-bottom: 20px;
     position: relative;
@@ -424,7 +428,7 @@ textarea:focus {
     border-radius: var(--border-radius-fob);
     font-size: 1rem;
     font-weight: 600;
-    cursor: pointer;
+    /* cursor: pointer; */
     transition: all 0.3s ease;
     text-align: center;
     text-decoration: none;
@@ -476,17 +480,27 @@ textarea:focus {
 
 .checkbox-group,
 .radio-group {
-    display: flex;
-    flex-direction: column;
+    display: flex !important;
+    flex-direction: column !important;
     gap: 0.75rem;
 }
 
 .checkbox-item,
 .radio-item {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    align-items: center !important;
     gap: 0.5rem;
-    font-weight: normal;
+    font-weight: normal !important;
+    font-size: 1rem !important;
+    color: var(--dark-fob) !important;
+}
+
+.form-group .label-fob {
+    display: block;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--dark-fob);
 }
 
 .checkbox-item input,
