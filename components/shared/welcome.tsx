@@ -5,7 +5,7 @@ const Welcome = () => {
     return (
         <div className="step active">
             <div className="welcome-content">
-                <h1>Welcome to Flowva</h1>
+                <h1 className="font-bold">Welcome to Flowva</h1>
                 <p>
                     Your smart library for organizing tools, tracking usage, and
                     turning productivity into rewards. Let`&apos;s set up your
@@ -13,7 +13,10 @@ const Welcome = () => {
                 </p>
             </div>
             <div className="btn-fob-group">
-                <button className="btn-fob" onClick={nextStep}>
+                <button
+                    type="button"
+                    className="btn-fob cursor-pointer"
+                    onClick={nextStep}>
                     Let`&apos;s Go
                 </button>
             </div>
