@@ -8,7 +8,7 @@ const Welcome = () => {
                 <h1 className="font-bold">Welcome to Flowva</h1>
                 <p>
                     Your smart library for organizing tools, tracking usage, and
-                    turning productivity into rewards. Let`&apos;s set up your
+                    turning productivity into rewards. Let&apos;s set up your
                     digital library in 2 minutes.
                 </p>
             </div>
@@ -17,7 +17,7 @@ const Welcome = () => {
                     type="button"
                     className="btn-fob cursor-pointer"
                     onClick={nextStep}>
-                    Let`&apos;s Go
+                    Let&apos;s Go
                 </button>
             </div>
         </div>
