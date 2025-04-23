@@ -3,15 +3,17 @@ import CustomSvgs from '@/components/shared/custom-svgs';
 import {usePasswordStrength} from '@/hooks/usePwdStrength';
 import {usePasswordToggle} from '@/hooks/usePwdToggle';
 import {resetPwd} from '@/lib/actions/user.actions';
-import {useActionState, useState} from 'react';
+import {redirect, useParams} from 'next/navigation';
+import {useActionState, useEffect, useState} from 'react';
 import {useFormStatus} from 'react-dom';
 
 const ResetPasswordForm = () => {
+    const {resettoken} = useParams();
+
     const [data, action] = useActionState(resetPwd, {
         success: false,
         message: '',
     });
-    const {pending} = useFormStatus();
 
     const passwordToggle = usePasswordToggle();
     const confirmToggle = usePasswordToggle();
@@ -19,8 +21,31 @@ const ResetPasswordForm = () => {
     const [, setConfirmPassword] = useState('');
     const {strengthLevel, showHint} = usePasswordStrength(password);
 
+    useEffect(() => {
+        if (data?.success && data?.redirectTo) {
+            setTimeout(() => {
+                redirect(data.redirectTo);
+            }, 5000);
+        }
+    }, [data]);
+
+    const ResetPwdButton = () => {
+        const {pending} = useFormStatus();
+        return (
+            <button
+                type="submit"
+                disabled={pending}
+                className={`btn ${
+                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}>
+                <CustomSvgs type="reset" />
+                {pending ? 'Resetting...' : 'Reset Password'}
+            </button>
+        );
+    };
     return (
         <form action={action}>
+            <input type="hidden" name="resettoken" value={resettoken} />
             <div className="text-[22px] font-semibold mb-[30px] text-center text-(--gray-700-fb)">
                 Reset your password
             </div>
@@ -80,15 +105,7 @@ const ResetPasswordForm = () => {
                 </span>
             </div>
 
-            <button
-                type="submit"
-                disabled={pending}
-                className={`btn ${
-                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
-                }`}>
-                <CustomSvgs type="reset" />
-                {pending ? 'Resetting...' : 'Reset Password'}
-            </button>
+            <ResetPwdButton />
         </form>
     );
 };
