@@ -138,13 +138,34 @@ export async function resetPwd(prevState: unknown, formData: FormData) {
             confirmPassword: formData.get('confirmPassword'),
         });
 
-        console.log('New password', userPwd.password);
+        const newPassword = {password: userPwd.password};
 
-        return {
-            success: true,
-            message:
-                'Your password has been changed. Redirecting to Log In page...',
-        };
+        const resettoken = formData.get('resettoken');
+
+        // Reset user password
+        const res = await fetch(
+            `${process.env.NEXT_FLOWVA_API_RESET_PASSWORD_ROUTE}${resettoken}`,
+            {
+                method: 'PUT',
+                body: JSON.stringify(newPassword),
+                headers: {'Content-Type': 'application/json'},
+            }
+        );
+
+        const data = await res.json();
+
+        if (res.ok && res.status === 200) {
+            return {
+                success: data.success,
+                message:
+                    'Your password has been changed. Redirecting to Sign In page...',
+                redirectTo: '/sign-in',
+            };
+        }
+
+        if (!res.ok) {
+            return {success: data.success, message: data.error};
+        }
     } catch (error) {
         if (isRedirectError(error)) {
             throw error;
