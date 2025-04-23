@@ -100,9 +100,25 @@ export async function forgotPwd(prevState: unknown, formData: FormData) {
             email: formData.get('email'),
         });
 
-        console.log('Reset link sent to your email', userEmail);
+        // Forgot user password
+        const res = await fetch(
+            `${process.env.NEXT_FLOWVA_API_FORGOT_PASSWORD_ROUTE}`,
+            {
+                method: 'POST',
+                body: JSON.stringify(userEmail),
+                headers: {'Content-Type': 'application/json'},
+            }
+        );
 
-        return {success: true, message: 'Reset link sent to your email'};
+        const data = await res.json();
+
+        if (res.ok && res.status === 200) {
+            return {success: data.success, message: data.data};
+        }
+
+        if (!res.ok && res.status === 404) {
+            return {success: data.success, message: data.error};
+        }
     } catch (error) {
         if (isRedirectError(error)) {
             throw error;
