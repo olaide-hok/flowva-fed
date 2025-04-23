@@ -30,7 +30,7 @@ export const forgotPasswordSchema = z.object({
 
 // Schema for About You Info
 // Define the possible role values
-const roleOptions = [
+export const roleOptions = [
     'Freelancer',
     'Solo entrepreneur',
     'Small team',
@@ -38,7 +38,7 @@ const roleOptions = [
 ] as const;
 
 // Define the possible work values
-const workOptions = [
+export const workOptions = [
     'Design',
     'Development',
     'Writing',
@@ -74,7 +74,7 @@ export type AboutYou = z.infer<typeof aboutYouFinalSchema>;
 
 // Country Selection
 // Define the countries
-const countryList = [
+export const countryList = [
     'US', // United States
     'GB', // United Kingdom
     'CA', // Canada
@@ -100,7 +100,7 @@ export const countrySchema = z.object({
 export type Location = z.infer<typeof countrySchema>;
 
 // Define available tool options
-const tools = [
+export const tools = [
     'Notion',
     'Trello',
     'Slack',
@@ -120,7 +120,7 @@ export const toolStackSchema = z.object({
 export type ToolStack = z.infer<typeof toolStackSchema>;
 
 // Goals
-const goalsList = [
+export const goalsList = [
     'Subscription costs',
     'Tool usage & engagement',
     'Unused/duplicate tools',
