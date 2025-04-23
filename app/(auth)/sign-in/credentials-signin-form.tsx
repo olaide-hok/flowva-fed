@@ -103,7 +103,7 @@ const CredentialsSignInForm = () => {
 
             <div className="divider">or continue with</div>
 
-            {/* <GoogleSignInButton session={session} /> */}
+            {/* <GoogleSignInButton /> */}
 
             <div className="form-footer">
                 Don&apos;t have an account?{' '}
