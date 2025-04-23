@@ -12,12 +12,17 @@ Here are some of the current features that app has:
 -   [x] Responsive design (Tailwind)
 -   [x] Custom 404 page
 
-Rental Radar uses the following technologies:
+Flowva Frontend App uses the following technologies:
 
 -   [Next.js](https://nextjs.org/)
 -   [React](https://reactjs.org/)
 -   [Tailwind CSS](https://tailwindcss.com/)
+-   [Animate.css](https://animate.style/)
 -   [NextAuth.js](https://next-auth.js.org/)
+-   [Nodemailer](https://www.nodemailer.com/)
+-   [Mailtrap](https://mailtrap.io/)
+-   [Zod](https://zod.dev/)
+-   [Zustand](https://zustand.docs.pmnd.rs/)
 
 ## Getting Started
 
