@@ -16,6 +16,8 @@ type FlowvaOnboardingAppState = OnboardingFormData & {
     setToolStack: (tool: ToolStack) => void;
     setGoals: (goals: Goals) => void;
     submitForm: () => void;
+    resetForm: () => void;
+    onboardingData: OnboardingFormData | null;
 };
 
 // --- Zustand Store ---
@@ -37,6 +39,7 @@ export const useOnboardingAppState = create<FlowvaOnboardingAppState>(
         goals: {
             goals: [],
         },
+        onboardingData: null,
 
         // Step logic
         nextStep: () => {
@@ -63,7 +66,31 @@ export const useOnboardingAppState = create<FlowvaOnboardingAppState>(
                 toolStack: get().toolStack,
                 goals: get().goals,
             };
-            console.log('submitted data', data);
+            // Save to store and localStorage
+            set({onboardingData: data});
+            localStorage.setItem('flowva_onboarding', JSON.stringify(data));
+
+            // console.log('submitted data', data);
         },
+        // Reset form
+        resetForm: () =>
+            set({
+                step: 0,
+                aboutYou: {
+                    role: undefined,
+                    work: [],
+                    work_other: '',
+                },
+                location: {
+                    country: undefined,
+                },
+                toolStack: {
+                    tools: [],
+                },
+                goals: {
+                    goals: [],
+                },
+                onboardingData: null,
+            }),
     })
 );
