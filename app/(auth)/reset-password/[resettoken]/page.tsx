@@ -9,7 +9,12 @@ export const metadata: Metadata = {
     title: 'Reset Password',
 };
 
-const ResetPassword = async () => {
+const ResetPassword = async (props: {
+    params: Promise<{resettoken: string}>;
+}) => {
+    const {resettoken} = await props.params;
+    console.log(resettoken);
+
     const session = await auth();
 
     if (session) {
