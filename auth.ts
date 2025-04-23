@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import NextAuth from 'next-auth';
-// import Credentials from 'next-auth/providers/credentials';
-
 import CredentialsProvider from 'next-auth/providers/credentials';
+import Google from 'next-auth/providers/google';
 
 export const config = {
     pages: {
@@ -10,17 +9,17 @@ export const config = {
         error: '/sign-in',
     },
     providers: [
-        // Google({
-        //     clientId: process.env.AUTH_GOOGLE_ID,
-        //     clientSecret: process.env.AUTH_GOOGLE_SECRET,
-        //     authorization: {
-        //         params: {
-        //             prompt: 'consent',
-        //             access_type: 'offline',
-        //             response_type: 'code',
-        //         },
-        //     },
-        // }),
+        Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+            authorization: {
+                params: {
+                    prompt: 'consent',
+                    access_type: 'offline',
+                    response_type: 'code',
+                },
+            },
+        }),
         CredentialsProvider({
             // The name to display on the sign in form (e.g. 'Sign in with...')
             name: 'Credentials',
@@ -52,8 +51,16 @@ export const config = {
     ],
     callbacks: {
         async session({session, token}: any) {
-            session.user = token.user;
+            if (token?.user) {
+                session.user = token.user;
+            }
             return session;
+        },
+        async jwt({token, user}: any) {
+            if (user) {
+                token.user = user;
+            }
+            return token;
         },
     },
 };
