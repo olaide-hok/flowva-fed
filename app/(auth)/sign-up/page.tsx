@@ -1,7 +1,7 @@
 import {Metadata} from 'next';
 import {APP_NAME} from '@/lib/constants';
-// import {auth} from '@/auth';
-// import {redirect} from 'next/navigation';
+import {auth} from '@/auth';
+import {redirect} from 'next/navigation';
 import SignUpForm from './sign-up-form';
 import CustomSvgs from '@/components/shared/custom-svgs';
 
@@ -10,11 +10,11 @@ export const metadata: Metadata = {
 };
 
 const SignUpPage = async () => {
-    // const session = await auth();
+    const session = await auth();
 
-    // if (session) {
-    //     return redirect('/');
-    // }
+    if (session) {
+        return redirect('/');
+    }
 
     return (
         <div className="container animate__animated animate__fadeInUp">
