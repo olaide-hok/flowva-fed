@@ -10,7 +10,21 @@ const ForgotPasswordForm = () => {
         success: false,
         message: '',
     });
-    const {pending} = useFormStatus();
+
+    const ResetPwdButton = () => {
+        const {pending} = useFormStatus();
+        return (
+            <button
+                type="submit"
+                disabled={pending}
+                className={`btn ${
+                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
+                }`}>
+                <CustomSvgs type="reset" />
+                {pending ? 'Sending reset link...' : 'Send reset link'}
+            </button>
+        );
+    };
 
     return (
         <form action={action}>
@@ -40,15 +54,7 @@ const ForgotPasswordForm = () => {
                 />
             </div>
 
-            <button
-                type="submit"
-                disabled={pending}
-                className={`btn ${
-                    pending ? 'cursor-not-allowed' : 'cursor-pointer'
-                }`}>
-                <CustomSvgs type="reset" />
-                {pending ? 'Sending reset link...' : 'Send reset link'}
-            </button>
+            <ResetPwdButton />
 
             <div className="form-footer">
                 Remember your password?{' '}
