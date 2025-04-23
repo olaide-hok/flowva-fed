@@ -18,8 +18,15 @@ const ForgotPasswordForm = () => {
                 Reset your password
             </div>
 
-            {data && !data.success && (
-                <div className="form-message">{data.message}</div>
+            {data && !data.success && data.message !== '' ? (
+                <div className="form-message error-message">{data.message}</div>
+            ) : (
+                ''
+            )}
+            {data && data.success && (
+                <div className="form-message success-message">
+                    {data.message}
+                </div>
             )}
             <div className="form-group">
                 <label htmlFor="email">Email</label>
@@ -40,7 +47,7 @@ const ForgotPasswordForm = () => {
                     pending ? 'cursor-not-allowed' : 'cursor-pointer'
                 }`}>
                 <CustomSvgs type="reset" />
-                {pending ? 'Sending In...' : 'Send reset link'}
+                {pending ? 'Sending reset link...' : 'Send reset link'}
             </button>
 
             <div className="form-footer">
