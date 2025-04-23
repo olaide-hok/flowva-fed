@@ -65,13 +65,16 @@ const AboutYou = () => {
                 </label>
                 <div className="radio-group">
                     {roleOptions.map((roleOpt) => (
-                        <label key={roleOpt} className="radio-item">
+                        <label
+                            key={roleOpt}
+                            className="radio-item cursor-pointer">
                             <input
                                 type="radio"
                                 name="role"
                                 value={roleOpt}
                                 checked={aboutYou.role === roleOpt}
                                 onChange={handleRoleChange}
+                                className="cursor-pointer"
                             />
                             {roleOpt}
                         </label>
@@ -89,20 +92,23 @@ const AboutYou = () => {
                 </label>
                 <div className="checkbox-group">
                     {workOptions.map((workOpt) => (
-                        <label key={workOpt} className="checkbox-item">
+                        <label
+                            key={workOpt}
+                            className="checkbox-item cursor-pointer">
                             <input
                                 type="checkbox"
                                 name="work"
                                 value={workOpt}
                                 checked={aboutYou.work.includes(workOpt)}
                                 onChange={handleWorkChange}
+                                className="cursor-pointer"
                             />
                             {workOpt}
                             {workOpt === 'Other' && showOtherInput && (
                                 <input
                                     type="text"
                                     name="work_other"
-                                    className="other-input"
+                                    className="cursor-pointer"
                                     placeholder="Please specify"
                                     value={aboutYou.work_other}
                                     onChange={handleOtherInputChange}

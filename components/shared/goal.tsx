@@ -43,13 +43,16 @@ const Goals = () => {
                 </label>
                 <div className="checkbox-group">
                     {goalsList.map((goal) => (
-                        <label key={goal} className="checkbox-item">
+                        <label
+                            key={goal}
+                            className="checkbox-item cursor-pointer">
                             <input
                                 type="checkbox"
                                 name="goals"
                                 value={goal}
                                 checked={selectedGoals.includes(goal)}
                                 onChange={handleChange}
+                                className="cursor-pointer"
                             />
                             {goal}
                         </label>
