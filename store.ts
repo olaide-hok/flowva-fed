@@ -40,28 +40,20 @@ const defaultState: OnboardingFormData = {
     },
 };
 
-// Read from localStorage on init
-const loadInitialState = (): OnboardingFormData => {
-    try {
-        const stored = localStorage.getItem('flowva_onboarding');
-        if (stored) {
-            const parsed = JSON.parse(stored);
-            const result = onboradingFormDataSchema.safeParse(parsed);
-            if (result.success) return result.data;
-        }
-    } catch (err) {
-        console.warn('⚠️ Failed to load onboarding state:', err);
-    }
-    return defaultState;
-};
-
 // --- Zustand Store ---
-export const useOnboardingAppState = create<FlowvaOnboardingAppState>()(
+export const useOnboardingAppState = create<
+    FlowvaOnboardingAppState & {
+        hasHydrated: boolean;
+        setHasHydrated: () => void;
+    }
+>()(
     persist(
         (set, get) => ({
             // Initial form state
             step: 0,
-            ...loadInitialState(),
+            ...defaultState,
+            hasHydrated: false,
+            setHasHydrated: () => set({hasHydrated: true}),
             get onboardingData() {
                 return {
                     aboutYou: get().aboutYou,
@@ -131,6 +123,10 @@ export const useOnboardingAppState = create<FlowvaOnboardingAppState>()(
                         ].includes(key)
                     )
                 ),
+            // 👇 Hydration hook
+            onRehydrateStorage: () => (state) => {
+                state?.setHasHydrated(); // ← triggers hydration complete
+            },
         }
     )
 );
