@@ -40,6 +40,17 @@ export async function signInWithCredentials(
     }
 }
 
+export async function googleSignIn() {
+    try {
+        await signIn('google', {redirectTo: '/'});
+    } catch (error) {
+        if (isRedirectError(error)) {
+            throw error;
+        }
+        return {success: false, message: 'Google sign-in failed'};
+    }
+}
+
 // Sign user out
 export async function signOutUser() {
     await signOut({
