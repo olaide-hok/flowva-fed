@@ -2,6 +2,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import Google from 'next-auth/providers/google';
+import {registerUserRoute, signInUserRoute} from './lib/utils';
 
 export const config = {
     pages: {
@@ -50,6 +51,59 @@ export const config = {
         }),
     ],
     callbacks: {
+        async signIn({account, profile}: any) {
+            if (account.provider === 'google') {
+                if (!profile) return false;
+
+                const googleUser = {
+                    email: profile.email,
+                    password:
+                        process.env
+                            .NEXT_FLOWVA_GOOGLE_PROVIDER_PLACEHOLDER_PASSWORD!,
+                };
+
+                // Check if google user already exists
+                const {ok, status, data} = await signInUserRoute(googleUser);
+
+                // If not, register Google user
+                if (!ok && status === 401) {
+                    const registerCredentials = {
+                        name: profile.name,
+                        email: profile.email,
+                        password:
+                            process.env
+                                .NEXT_FLOWVA_GOOGLE_PROVIDER_PLACEHOLDER_PASSWORD!,
+                    };
+                    const {ok, status, data} = await registerUserRoute(
+                        registerCredentials
+                    );
+
+                    if (ok) {
+                        return {
+                            success: true,
+                            message:
+                                'Account created successfully! Welcome to Flowva.',
+                            redirectTo: '/',
+                        };
+                    }
+
+                    if (!ok && status === 404) {
+                        return {
+                            success: data.success,
+                            message: data.error,
+                        };
+                    }
+                }
+
+                // Sign-in google user if they already exists
+                if (ok && data) {
+                    return data;
+                }
+            }
+            if (account.provider === 'credentials') {
+                return true;
+            }
+        },
         async session({session, token}: any) {
             if (token?.user) {
                 session.user = token.user;
