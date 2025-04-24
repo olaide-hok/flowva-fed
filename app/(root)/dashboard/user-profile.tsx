@@ -1,14 +1,40 @@
 'use client';
-import {useOnboardingAppState} from '@/store';
+
+import {OnboardingFormData, onboradingFormDataSchema} from '@/lib/validators';
 import {useEffect, useState} from 'react';
 
 const UserProfileDetails = () => {
-    const [isHydrated, setIsHydrated] = useState(false);
-    const {onboardingData: data} = useOnboardingAppState();
-
+    const [data, setData] = useState<OnboardingFormData>();
+    const [loading, setLoading] = useState(true);
     useEffect(() => {
-        setIsHydrated(true);
+        // Runs only on client
+        const stored = localStorage.getItem('flowva_onboarding');
+
+        if (stored) {
+            try {
+                const parsed = JSON.parse(stored);
+
+                // If zustand persist format, unwrap `state`
+                const payload = parsed?.state ?? parsed;
+
+                const result = onboradingFormDataSchema.safeParse(payload);
+
+                if (result.success) {
+                    setData(result.data);
+                }
+            } catch (err) {
+                console.error('Failed to parse localStorage data', err);
+            }
+        }
+
+        setLoading(false);
     }, []);
+
+    if (loading) return <div>Loading...</div>;
+
+    if (!data) return <div>No onboarding data found.</div>;
+
+    const {aboutYou, location, toolStack, goals} = data;
 
     // Expanded country code to name mapping
     const countryNames: Record<string, string> = {
@@ -19,12 +45,10 @@ const UserProfileDetails = () => {
         DE: 'Germany',
         FR: 'France',
         JP: 'Japan',
+        IN: 'India',
+        BR: 'Brazil',
+        NG: 'Nigeria',
     };
-
-    if (!isHydrated) {
-        return null; // or a loading skeleton, spinner, etc.
-    }
-    const {aboutYou, location, toolStack, goals} = data || {};
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
