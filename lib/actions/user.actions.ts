@@ -9,7 +9,7 @@ import {
 
 import {isRedirectError} from 'next/dist/client/components/redirect-error';
 import {formatError} from '../utils';
-import {signIn} from '@/auth';
+import {signIn, signOut} from '@/auth';
 
 // Sign in the user with credentials
 export async function signInWithCredentials(
@@ -38,6 +38,14 @@ export async function signInWithCredentials(
         }
         return {success: false, message: 'Invalid email or password'};
     }
+}
+
+// Sign user out
+export async function signOutUser() {
+    await signOut({
+        redirect: true,
+        redirectTo: '/sign-in', // navigate to sign-in page
+    });
 }
 
 // Sign up user
