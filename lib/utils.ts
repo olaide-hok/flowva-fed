@@ -22,3 +22,47 @@ export function formatError(error: any) {
             : JSON.stringify(error.message);
     }
 }
+
+interface SignInUserInterface {
+    email: string;
+    password: string;
+}
+
+export const signInUserRoute = async (user: SignInUserInterface) => {
+    const res = await fetch(`${process.env.NEXT_FLOWVA_API_LOGIN_ROUTE}`, {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {'Content-Type': 'application/json'},
+    });
+
+    const data = await res.json();
+
+    return {
+        ok: res.ok,
+        status: res.status,
+        data,
+    };
+};
+
+interface RegisterUserInterface {
+    name: string;
+    email: string;
+    password: string;
+}
+
+export const registerUserRoute = async (
+    registerCredentials: RegisterUserInterface
+) => {
+    const res = await fetch(`${process.env.NEXT_FLOWVA_API_REGISTER_ROUTE}`, {
+        method: 'POST',
+        body: JSON.stringify(registerCredentials),
+        headers: {'Content-Type': 'application/json'},
+    });
+    const data = await res.json();
+
+    return {
+        ok: res.ok,
+        status: res.status,
+        data,
+    };
+};
