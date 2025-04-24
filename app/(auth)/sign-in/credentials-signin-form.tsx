@@ -6,7 +6,7 @@ import {useActionState, useEffect, useState} from 'react';
 import {useFormStatus} from 'react-dom';
 import {signInWithCredentials} from '@/lib/actions/user.actions';
 import CustomSvgs from '@/components/shared/custom-svgs';
-// import GoogleSignInButton from './googleSignIn';
+import GoogleSignInButton from './googleSignIn';
 import {usePasswordToggle} from '@/hooks/usePwdToggle';
 import {redirect} from 'next/navigation';
 
@@ -101,7 +101,7 @@ const CredentialsSignInForm = () => {
 
             <div className="divider">or continue with</div>
 
-            {/* <GoogleSignInButton /> */}
+            <GoogleSignInButton />
 
             <div className="form-footer">
                 Don&apos;t have an account?{' '}
